@@ -59,6 +59,9 @@
             </executions>
         </plugin>
         </plugins>
+        
+        <finalName>product_review</finalName>
+        
     </build>
 
 </project>
