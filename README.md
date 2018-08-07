@@ -1,2 +1,2 @@
-# ee.codingtask.mwb.product_review_webapp
-Coding Task: REST API for Product Reviews
+# com.mycompany.product_review_webapp
+RESTful Web Service for Product Reviews
