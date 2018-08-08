@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mycompany.product_review.service.ProductReviewRequest;
+import com.mycompany.log.LogTrace;
+import com.mycompany.product_review.bean.ProductReview;
+import com.mycompany.product_review.dao.ProductReviewDao;
 import com.mycompany.product_review.service.ProductReviewResponse;
+import com.mycompany.queue.Message;
+import com.mycompany.queue.MessageBroker;
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -17,19 +21,19 @@ public class ProductReviewController
 {
 	@PostMapping(produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ProductReviewResponse submit(@RequestBody ProductReviewRequest productReviewRequest)
+	public ProductReviewResponse submit(@RequestBody ProductReview productReview)
 	{
 		Integer reviewId = null;
 		Boolean success = true;
 		try
 		{
-			System.out.println(productReviewRequest.getReviewerName());
-			System.out.println(productReviewRequest.getEmail());
-			System.out.println(productReviewRequest.getProductId());
-			System.out.println(productReviewRequest.getReviewText());
+			ProductReviewDao.save(productReview);
+			reviewId = productReview.getId();
+			MessageBroker.push(new Message());
 		}
 		catch (Exception e)
 		{
+			LogTrace.error(e, "ProductReviewController.submit", e.getMessage(), null);
 			success = false;
 		}
 
