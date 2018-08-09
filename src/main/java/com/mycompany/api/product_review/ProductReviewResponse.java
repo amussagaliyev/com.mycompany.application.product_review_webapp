@@ -1,4 +1,4 @@
-package com.mycompany.product_review.service;
+package com.mycompany.api.product_review;
 
 public class ProductReviewResponse
 {
