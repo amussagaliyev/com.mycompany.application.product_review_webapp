@@ -2,7 +2,8 @@ package com.mycompany.application.product_review.controllers;
 
 import java.sql.SQLException;
 
-import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -14,14 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mycompany.api.jedis.RedisQueuePublisher;
 import com.mycompany.api.product_review.ProductReviewResponse;
 import com.mycompany.api.product_review.UserReview;
-import com.mycompany.db.Db;
-import com.mycompany.log.LogTrace;
-import com.mycompany.model.product.ProductDao;
 import com.mycompany.model.product_review.ProductReview;
-import com.mycompany.queue.Message;
-import com.mycompany.queue.MessageBroker;
 import com.mycompany.service.product_review.ProductReviewService;
 
 @RestController
@@ -29,8 +26,14 @@ import com.mycompany.service.product_review.ProductReviewService;
 @Service
 public class ProductReviewController
 {
+	
+	private final Logger logger = LoggerFactory.getLogger(ProductReviewController.class);
+	
 	@Autowired
 	private ProductReviewService productReviewService;
+	
+	@Autowired
+	private RedisQueuePublisher productReviewQueuePublisher;
 
 	@PostMapping(produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -46,11 +49,11 @@ public class ProductReviewController
 			response.setReviewId(productReview.getProductReviewID());
 			response.setSuccess(true);
 			
-			MessageBroker.push(new Message());
+			productReviewQueuePublisher.publish("product_review", productReview.toString());
 		}
 		catch (Exception e)
 		{
-			LogTrace.error(e, "ProductReviewController.submit", e.getMessage(), null);
+			logger.error("Error while submiting review", e);
 		}
 
 		return response;
@@ -60,9 +63,6 @@ public class ProductReviewController
 	@GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)
 	public String status() throws SQLException, ClassNotFoundException
 	{
-		
-		Transaction tx = Db.currentSession().beginTransaction();
-		tx.commit();
 		return "{\"status\"=\"alive\"}";
 	}
 }
