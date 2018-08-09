@@ -1,8 +1,6 @@
-package com.mycompany.product_review.controllers;
+package com.mycompany.product_review.webapp_config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
-import com.mycompany.product_review.webapp_config.ApplicationConfiguration;
 
 public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
 {
