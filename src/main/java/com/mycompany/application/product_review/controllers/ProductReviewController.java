@@ -32,24 +32,20 @@ public class ProductReviewController
 	@Autowired
 	private ProductReviewService productReviewService;
 	
-	@Autowired
-	private RedisQueuePublisher productReviewQueuePublisher;
-
 	@PostMapping(produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@Transactional
 	public ProductReviewResponse submit(@RequestBody UserReview userReview)
 	{
 		ProductReviewResponse response = new ProductReviewResponse(false, -1);
 
 		try
 		{
-			ProductReview productReview = productReviewService.createProductReview(userReview.getProductId(), userReview.getReviewerName(), userReview.getReviewerEmailAddress(), userReview.getReviewText());
+			ProductReview productReview = productReviewService.createProductReview(userReview.getProductId(), 
+					userReview.getReviewerName(), userReview.getReviewerEmailAddress(), 
+						userReview.getReviewText(), userReview.getRating());
 			
 			response.setReviewId(productReview.getProductReviewID());
 			response.setSuccess(true);
-			
-			productReviewQueuePublisher.publish("product_review", productReview.toString());
 		}
 		catch (Exception e)
 		{

@@ -8,7 +8,6 @@
         <!-- Settings for a database. -->  
         <property name="hibernate.connection.datasource">java:comp/env/jdbc/mycompanyDS</property>
         <property name="current_session_context_class">thread</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
   
         <!-- Disable second-level cache. -->  
         <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>  

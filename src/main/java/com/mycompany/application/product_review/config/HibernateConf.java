@@ -13,8 +13,6 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.mycompany.log.LogTrace;
-
 @Configuration
 @EnableTransactionManagement
 public class HibernateConf
@@ -42,8 +40,7 @@ public class HibernateConf
 			return dataSource;
 		} catch (NamingException e)
 		{
-			LogTrace.error(e, "HibernateConf.dataSource", "Could not get Data Source from context", null);
-			throw new RuntimeException(e);
+			throw new RuntimeException("Could not get Data Source from context", e);
 		}
 	}
 
