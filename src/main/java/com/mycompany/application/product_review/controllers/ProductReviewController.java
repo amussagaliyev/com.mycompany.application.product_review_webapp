@@ -40,9 +40,7 @@ public class ProductReviewController
 
 		try
 		{
-			ProductReview productReview = productReviewService.createProductReview(userReview.getProductId(), 
-					userReview.getReviewerName(), userReview.getReviewerEmailAddress(), 
-						userReview.getReviewText(), userReview.getRating());
+			ProductReview productReview = productReviewService.createProductReview(userReview);
 			
 			response.setReviewId(productReview.getProductReviewID());
 			response.setSuccess(true);

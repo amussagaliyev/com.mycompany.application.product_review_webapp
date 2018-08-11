@@ -10,9 +10,7 @@ import com.mycompany.api.jedis.RedisQueuePublisher;
 import com.mycompany.api.jedis.SimpleRedisConfig;
 
 @Configuration
-@EnableWebMvc
-@ComponentScan(basePackages = "com.mycompany")
-public class ApplicationConfiguration
+public class LocalApplicationConfiguration
 {
 	@Bean(name="productReviewQueuePublisher")
 	@Scope("singleton")
