@@ -1,4 +1,4 @@
-package com.mycompany.product_review.webapp_config;
+package com.mycompany.application.product_review.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -7,7 +7,7 @@ public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherSe
 	@Override
 	protected Class<?>[] getRootConfigClasses()
 	{
-		return new Class[] { ApplicationConfiguration.class };
+		return new Class[] {ApplicationConfiguration.class};
 	}
 
 	@Override
