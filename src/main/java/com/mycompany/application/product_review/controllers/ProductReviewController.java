@@ -21,7 +21,6 @@ import com.mycompany.service.product_review.ProductReviewService;
 
 @RestController
 @RequestMapping("/api/reviews")
-@Service
 public class ProductReviewController
 {
 	
