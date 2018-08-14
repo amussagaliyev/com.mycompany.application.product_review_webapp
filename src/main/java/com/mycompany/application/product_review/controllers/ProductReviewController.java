@@ -38,6 +38,7 @@ public class ProductReviewController
 		try
 		{
 			ProductReview productReview = productReviewService.createProductReview(userReview);
+			productReviewService.publishToSubmittedQueue(productReview.getProductReviewID());
 			
 			response.setReviewId(productReview.getProductReviewID());
 			response.setSuccess(true);
