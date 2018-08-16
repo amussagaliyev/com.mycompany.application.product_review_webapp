@@ -1,12 +1,14 @@
 package com.mycompany.application.product_review.controllers;
 
 import java.sql.SQLException;
+import java.util.UUID;
+
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +33,7 @@ public class ProductReviewController
 	
 	@PostMapping(produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ProductReviewResponse submit(@RequestBody UserReview userReview)
+	public ProductReviewResponse submit(@Valid @RequestBody UserReview userReview)
 	{
 		ProductReviewResponse response = new ProductReviewResponse(false, -1);
 
@@ -45,7 +47,9 @@ public class ProductReviewController
 		}
 		catch (Exception e)
 		{
-			logger.error("Error while submiting review", e);
+			UUID errorID = UUID.randomUUID();
+			logger.error("Error while submiting review (" + errorID.toString() + ")", e);
+			response.setErrorMessage("Error while submiting review. Error code is " + errorID.toString());
 		}
 
 		return response;
