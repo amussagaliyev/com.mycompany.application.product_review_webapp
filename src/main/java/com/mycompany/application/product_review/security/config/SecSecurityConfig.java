@@ -8,12 +8,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Configuration
+/*@Configuration
 @ImportResource(
 { "classpath:webSecurityConfig.xml" })
 @ComponentScan("com.mycompany")
 @EnableWebSecurity
-public class SecSecurityConfig
+*/public class SecSecurityConfig
 {
 
 	public SecSecurityConfig()
@@ -21,8 +21,8 @@ public class SecSecurityConfig
 		super();
 	}
 
-	@Bean
-	public PasswordEncoder passwordEncoder()
+/*	@Bean
+*/	public PasswordEncoder passwordEncoder()
 	{
 		return new BCryptPasswordEncoder();
 	}
